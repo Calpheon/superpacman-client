@@ -114,7 +114,7 @@ body {
 .game-board {
   background-color: var(--pacman-black);
   border: 8px solid var(--maze-color);
-  padding: 10px;
+  padding: 1px;
   box-shadow: 0 0 25px var(--maze-color), 0 0 10px var(--maze-color) inset; /* Stronger glow */
   display: inline-block;
   margin: 0 auto;

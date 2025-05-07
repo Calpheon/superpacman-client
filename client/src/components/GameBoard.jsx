@@ -5,7 +5,7 @@ import MotivationalBanner from "./MotivationalBanner";
 
 
 const BOARD_SIZE = 20;
-const CELL_SIZE = 30;
+const CELL_SIZE = 25;
 
 
 function GameBoard() {
@@ -147,6 +147,7 @@ function GameBoard() {
           transition: "left 0.2s, top 0.2s",
           backgroundColor: ghostColors[ghost.personality] || "#FF0000",
           borderRadius: "50% 50% 0 0",
+
           boxShadow: `
             0px ${CELL_SIZE / 2 - 3}px 0 -10px ${
             ghostColors[ghost.personality] || "#FF0000"
@@ -160,7 +161,7 @@ function GameBoard() {
           `,
         }}
       >
-
+        {/* Ghost eyes */}
         <div
           style={{
             position: "absolute",
@@ -228,7 +229,7 @@ function GameBoard() {
         {renderGhosts()}
       </div>
       
-
+      {/* Pindahkan banner ke bawah game board */}
       <MotivationalBanner />
       
       <div
