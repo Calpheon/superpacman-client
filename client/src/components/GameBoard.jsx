@@ -243,6 +243,7 @@ function GameBoard() {
           border: "3px solid #2121DE",
         }}
       >
+        <div className="container">
         <div>
           GHOSTS:{" "}
           <span style={{ color: "#FFCC00" }}>{gameState.ghosts.length}</span>
@@ -250,6 +251,8 @@ function GameBoard() {
         <div>
           POINTS:{" "}
           <span style={{ color: "#FFCC00" }}>{gameState.points.length}</span>
+        </div>
+
         </div>
       </div>
     </div>
