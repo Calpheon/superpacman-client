@@ -4,7 +4,6 @@ import HomeScreen from "./components/HomeScreen";
 import GameBoard from "./components/GameBoard";
 import GameInfo from "./components/GameInfo";
 import Leaderboard from "./components/Leaderboard";
-import GeminiCoach from "./components/GeminiCoach";
 import "./App.css";
 
 // Game layout utama
@@ -139,8 +138,6 @@ function GameLayout() {
       <div className="game-content" style={{ display: "flex", gap: "20px" }}>
         <div className="game-main">
           <GameBoard />
-          {/* GeminiCoach tetap dapat dipertahankan jika diinginkan */}
-          <GeminiCoach />
         </div>
         <div className="sidebar">
           <Leaderboard />

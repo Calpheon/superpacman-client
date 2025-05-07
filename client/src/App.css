@@ -1,42 +1,228 @@
-#root {
-  max-width: 1280px;
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  --pacman-yellow: #FFCC00;
+  --pacman-blue: #0000FF;
+  --pacman-pink: #FF69B4;
+  --pacman-red: #FF0000;
+  --pacman-orange: #FF8C00;
+  --pacman-black: #000000;
+  --pacman-white: #FFFFFF;
+  --maze-color: #2121DE;
+}
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  margin: 0;
+  padding: 0;
+  background-color: var(--pacman-black);
+  color: var(--pacman-white);
+  line-height: 1.5;
+}
+
+.App {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px;
+}
+
+.game-header {
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.game-header h1 {
+  color: var(--pacman-yellow);
+  font-size: 2.5rem;
+  text-shadow: 4px 4px 0px var(--maze-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.game-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.game-main {
+  flex: 1;
+  min-width: 300px;
+}
+
+.sidebar {
+  width: 300px;
+  background-color: rgba(33, 33, 222, 0.3);
+  border: 4px solid var(--maze-color);
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+.game-board {
+  background-color: var(--pacman-black);
+  border: 8px solid var(--maze-color);
+  padding: 10px;
+  box-shadow: 0 0 20px rgba(33, 33, 222, 0.8);
+}
+
+.game-cell {
+  background-color: var(--pacman-black);
+  border: 1px solid rgba(33, 33, 222, 0.3);
+}
+
+/* PacMan dots */
+.dot {
+  background-color: var(--pacman-yellow);
+  border-radius: 50%;
+}
+
+/* Power pellet */
+.power-pellet {
+  background-color: var(--pacman-white);
+  border-radius: 50%;
+  animation: blink 0.5s infinite alternate;
+}
+
+/* Custom buttons */
+.pacman-button {
+  font-family: 'Press Start 2P', cursive;
+  background-color: var(--maze-color);
+  color: var(--pacman-white);
+  border: 3px solid var(--pacman-yellow);
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
+  transition: all 0.2s;
+  margin: 10px 0;
+}
+
+.pacman-button:hover {
+  background-color: var(--pacman-yellow);
+  color: var(--pacman-black);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+}
+
+.pacman-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 2px solid var(--maze-color);
+  font-size: 0.7rem;
+}
+
+th {
+  color: var(--pacman-yellow);
+  text-transform: uppercase;
+}
+
+/* Forms */
+input[type="text"] {
+  font-family: 'Press Start 2P', cursive;
+  background-color: var(--pacman-black);
+  border: 3px solid var(--maze-color);
+  color: var(--pacman-white);
+  padding: 10px;
+  font-size: 14px;
+  margin-right: 10px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+@keyframes blink {
+  from { opacity: 1; }
+  to { opacity: 0.3; }
+}
+
+@keyframes chomp {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(45deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes ghost-float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+.ghost {
+  animation: ghost-float 2s infinite;
+}
+
+.player {
+  animation: chomp 0.3s infinite;
+}
+
+/* Game Over */
+.game-over {
+  font-size: 2rem;
+  color: var(--pacman-red);
+  text-align: center;
+  margin-top: 30px;
+  animation: blink 1s infinite;
+  text-transform: uppercase;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .game-content {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .sidebar {
+    width: 100%;
+  }
+  
+  .game-header h1 {
+    font-size: 1.8rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Animasi untuk banner motivasi */
+.motivational-banner {
+  position: relative;
+  overflow: hidden;
 }
 
-.card {
-  padding: 2em;
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
-.read-the-docs {
-  color: #888;
+@keyframes pulse-border {
+  0% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 204, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
+}
+
+.motivational-banner {
+  animation: pulse-border 2s infinite;
+}
+
+/* Tambahkan style untuk tombol refresh */
+
+.motivational-banner button:hover {
+  background-color: rgba(255, 204, 0, 0.2) !important;
+  transform: scale(1.1);
+}
+
+.motivational-banner button:active {
+  transform: scale(0.95);
 }
