@@ -1,14 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 :root {
-  --pacman-yellow: #FFCC00;
-  --pacman-blue: #0000FF;
-  --pacman-pink: #FF69B4;
-  --pacman-red: #FF0000;
-  --pacman-orange: #FF8C00;
-  --pacman-black: #000000;
-  --pacman-white: #FFFFFF;
-  --maze-color: #2121DE;
+  /* Synthwave Grid Theme */
+  --pacman-yellow: #FFF200; /* Bright Yellow */
+  --pacman-blue: #00F9FF;   /* Neon Cyan (used for accents) */
+  --pacman-pink: #FF00FF;   /* Neon Magenta */
+  --pacman-red: #FF3333;    /* Neon Red */
+  --pacman-orange: #FF8C00; /* Neon Orange */
+  --pacman-black: #1A0529;  /* Deep Purple/Black */
+  --pacman-white: #F0F0F0;  /* Light Grey/White */
+  --maze-color: #FF6AD5;   /* Neon Pink for maze */
+  --ghost-cyan: #00F9FF;   /* Neon Cyan */
+  --ghost-pink: #FF00FF;   /* Neon Magenta */
+  --ghost-red: #FF3333;    /* Neon Red */
+  --ghost-orange: #FF8C00; /* Neon Orange */
+
+  --ui-border-color: var(--maze-color);
+  --text-glow-color: rgba(255, 106, 213, 0.7); /* Neon Pink Glow */
+  --background-dots-color: rgba(255, 106, 213, 0.08); /* Lighter pink for dots */
 }
 
 body {
@@ -18,6 +27,11 @@ body {
   background-color: var(--pacman-black);
   color: var(--pacman-white);
   line-height: 1.5;
+  background-image: radial-gradient(
+    var(--background-dots-color) 2px, /* Updated dot color and size */
+    transparent 2px
+  );
+  background-size: 25px 25px; /* Adjusted dot pattern size */
 }
 
 .App {
@@ -26,6 +40,7 @@ body {
   padding: 20px;
 }
 
+/* Header section */
 .game-header {
   margin-bottom: 20px;
   text-align: center;
@@ -34,10 +49,37 @@ body {
 .game-header h1 {
   color: var(--pacman-yellow);
   font-size: 2.5rem;
-  text-shadow: 4px 4px 0px var(--maze-color);
+  text-shadow: 
+    0 0 5px var(--pacman-yellow),
+    0 0 10px var(--pacman-yellow),
+    0 0 15px var(--maze-color),
+    3px 3px 0px var(--pacman-black); /* Keep a bit of depth */
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Add Pac-Man icon next to title */
+.game-header h1::before {
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: var(--pacman-yellow);
+  border-radius: 50%;
+  margin-right: 15px;
+  vertical-align: middle;
+  clip-path: polygon(100% 0, 75% 50%, 100% 100%, 0 100%, 0 0);
+  animation: chomping 0.3s steps(2) infinite;
+  box-shadow: 0 0 8px var(--pacman-yellow); /* Glow for Pac-Man icon */
+}
+
+@keyframes chomping {
+  0% { clip-path: polygon(100% 0, 75% 50%, 100% 100%, 0 100%, 0 0); }
+  50% { clip-path: polygon(100% 35%, 100% 65%, 100% 65%, 0 65%, 0 35%); }
+  100% { clip-path: polygon(100% 0, 75% 50%, 100% 100%, 0 100%, 0 0); }
 }
 
 .game-content {
@@ -50,33 +92,71 @@ body {
 .game-main {
   flex: 1;
   min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sidebar {
   width: 300px;
-  background-color: rgba(33, 33, 222, 0.3);
-  border: 4px solid var(--maze-color);
+  background-color: rgba(26, 5, 41, 0.5); /* Darker, themed background */
+  border: 4px solid var(--ui-border-color);
   padding: 15px;
   box-sizing: border-box;
-  border-radius: 0;
+  border-radius: 0; /* Keep sharp edges for retro feel */
+  position: relative;
+  box-shadow: 
+    inset 0 0 15px rgba(0,0,0, 0.5), /* Inner shadow */
+    0 0 10px var(--text-glow-color);   /* Outer glow */
 }
 
+/* Improved game board styling */
 .game-board {
   background-color: var(--pacman-black);
   border: 8px solid var(--maze-color);
   padding: 10px;
-  box-shadow: 0 0 20px rgba(33, 33, 222, 0.8);
+  box-shadow: 0 0 25px var(--maze-color), 0 0 10px var(--maze-color) inset; /* Stronger glow */
+  display: inline-block;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Add a maze pattern overlay */
+.game-board::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 106, 213, 0.1) 1px, transparent 1px), /* Themed grid lines */
+    linear-gradient(to bottom, rgba(255, 106, 213, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px; /* Ensure this matches your cell size logic */
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Improved cell styling */
 .game-cell {
-  background-color: var(--pacman-black);
-  border: 1px solid rgba(33, 33, 222, 0.3);
+  background-color: transparent; /* Cells are part of the dark board */
+  border: 1px solid rgba(255, 106, 213, 0.2); /* Fainter themed cell borders */
+  position: relative;
+  box-sizing: border-box;
 }
 
-/* PacMan dots */
+/* Fix for PacMan dots to be centered in cells */
 .dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
   background-color: var(--pacman-yellow);
   border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
 }
 
 /* Power pellet */
@@ -84,28 +164,117 @@ body {
   background-color: var(--pacman-white);
   border-radius: 50%;
   animation: blink 0.5s infinite alternate;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+/* Improved player styling - ensuring proper grid positioning */
+.player {
+  position: absolute;
+  transform-origin: center;
+  z-index: 10;
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: left 0.1s, top 0.1s;
+}
+
+.current-player {
+  box-shadow: 0 0 10px var(--pacman-yellow), 0 0 5px var(--pacman-yellow); /* Brighter glow for current player */
+}
+
+/* Fixed ghost positioning */
+.ghost {
+  position: absolute;
+  z-index: 5;
+  transition: left 0.2s, top 0.2s;
+  box-sizing: border-box;
+  animation: ghost-float 2s infinite;
+}
+
+/* Ghost eyes */
+.ghost-eye {
+  position: absolute;
+  width: 25%;
+  height: 25%;
+  background-color: white;
+  border-radius: 50%;
+  top: 25%;
+  z-index: 6;
+}
+
+.ghost-eye::after {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background-color: var(--pacman-blue); /* Pupil color */
+  border-radius: 50%;
+  top: 25%;
+}
+
+.ghost-left-eye {
+  left: 20%;
+}
+
+.ghost-right-eye {
+  right: 20%;
+}
+
+.ghost-left-eye::after {
+  right: 10%;
+}
+
+.ghost-right-eye::after {
+  left: 10%;
 }
 
 /* Custom buttons */
 .pacman-button {
   font-family: 'Press Start 2P', cursive;
-  background-color: var(--maze-color);
-  color: var(--pacman-white);
-  border: 3px solid var(--pacman-yellow);
+  background-color: transparent; /* Transparent background */
+  color: var(--pacman-yellow);
+  border: 3px solid var(--maze-color);
   padding: 10px 20px;
   font-size: 14px;
   cursor: pointer;
   text-transform: uppercase;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
+  box-shadow: 
+    0 0 5px var(--maze-color),
+    0 0 10px var(--maze-color) inset,
+    2px 2px 0px var(--pacman-black); /* Themed shadow */
   transition: all 0.2s;
   margin: 10px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.pacman-button::before {
+  content: ">";
+  position: absolute;
+  left: -20px;
+  opacity: 0;
+  transition: all 0.2s;
 }
 
 .pacman-button:hover {
-  background-color: var(--pacman-yellow);
+  background-color: var(--maze-color);
   color: var(--pacman-black);
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  transform: translate(1px, 1px); /* Subtle hover effect */
+  box-shadow: 
+    0 0 8px var(--maze-color),
+    0 0 15px var(--maze-color) inset,
+    1px 1px 0px var(--pacman-black);
+  padding-left: 25px;
+}
+
+.pacman-button:hover::before {
+  left: 8px;
+  opacity: 1;
 }
 
 .pacman-button:active {
@@ -118,6 +287,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid var(--maze-color);
 }
 
 th, td {
@@ -130,18 +300,26 @@ th, td {
 th {
   color: var(--pacman-yellow);
   text-transform: uppercase;
+  background-color: rgba(255, 106, 213, 0.15); /* Themed header background */
+  text-shadow: 0 0 3px var(--pacman-yellow);
 }
 
 /* Forms */
 input[type="text"] {
   font-family: 'Press Start 2P', cursive;
-  background-color: var(--pacman-black);
+  background-color: rgba(0,0,0,0.3); /* Darker input */
   border: 3px solid var(--maze-color);
   color: var(--pacman-white);
   padding: 10px;
   font-size: 14px;
   margin-right: 10px;
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.7);
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--pacman-yellow);
+  box-shadow: 0 0 10px var(--pacman-yellow), inset 0 0 5px var(--pacman-yellow);
 }
 
 /* Animations */
@@ -150,24 +328,17 @@ input[type="text"] {
   to { opacity: 0.3; }
 }
 
+/* Better Pac-Man chomping animation */
 @keyframes chomp {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(45deg); }
-  100% { transform: rotate(0deg); }
+  0% { clip-path: polygon(100% 0, 75% 50%, 100% 100%, 0 100%, 0 0); }
+  50% { clip-path: polygon(100% 35%, 100% 65%, 100% 65%, 0 65%, 0 35%); }
+  100% { clip-path: polygon(100% 0, 75% 50%, 100% 100%, 0 100%, 0 0); }
 }
 
 @keyframes ghost-float {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  50% { transform: translateY(-3px); }
   100% { transform: translateY(0); }
-}
-
-.ghost {
-  animation: ghost-float 2s infinite;
-}
-
-.player {
-  animation: chomp 0.3s infinite;
 }
 
 /* Game Over */
@@ -178,6 +349,31 @@ input[type="text"] {
   margin-top: 30px;
   animation: blink 1s infinite;
   text-transform: uppercase;
+  text-shadow: 0 0 5px var(--pacman-red), 0 0 10px var(--pacman-red), 2px 2px 0 var(--pacman-black);
+}
+
+/* Lives display */
+.lives-display {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.life-icon {
+  width: 15px;
+  height: 15px;
+  background-color: var(--pacman-yellow);
+  border-radius: 50%;
+  clip-path: polygon(100% 0, 75% 50%, 100% 100%, 0 100%, 0 0);
+}
+
+/* Score display */
+.score-display {
+  color: var(--pacman-yellow);
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  text-shadow: 0 0 5px var(--pacman-yellow), 1px 1px 0px var(--pacman-black);
 }
 
 /* Media Queries */
@@ -193,12 +389,34 @@ input[type="text"] {
   .game-header h1 {
     font-size: 1.8rem;
   }
+  
+  .game-board {
+    max-width: 90vw;
+    overflow: auto;
+  }
 }
 
-/* Animasi untuk banner motivasi */
+/* Improved motivational banner */
 .motivational-banner {
   position: relative;
   overflow: hidden;
+  border: 3px solid var(--pacman-yellow);
+  padding: 12px;
+  margin: 15px 0;
+  background-color: rgba(0,0,0, 0.6); /* Darker banner */
+  text-align: center;
+  animation: pulse-border-synth 2s infinite; /* New animation name if needed */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.motivational-banner p {
+  color: var(--pacman-yellow);
+  margin: 0;
+  font-size: 0.8rem;
+  text-shadow: 0 0 5px var(--pacman-yellow), 0 0 2px var(--pacman-yellow);
+  flex: 1;
 }
 
 @keyframes marquee {
@@ -206,23 +424,81 @@ input[type="text"] {
   100% { transform: translateX(-100%); }
 }
 
-@keyframes pulse-border {
-  0% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 204, 0, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
+@keyframes pulse-border-synth { /* Renamed to avoid conflict if original is kept elsewhere */
+  0% { box-shadow: 0 0 0 0 rgba(255, 242, 0, 0.7), 0 0 5px var(--pacman-yellow); } /* Yellow pulse */
+  70% { box-shadow: 0 0 0 5px rgba(255, 242, 0, 0), 0 0 10px var(--pacman-yellow); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 242, 0, 0), 0 0 5px var(--pacman-yellow); }
 }
 
-.motivational-banner {
-  animation: pulse-border 2s infinite;
+.motivational-banner button {
+  background-color: transparent;
+  border: 2px solid var(--pacman-yellow);
+  color: var(--pacman-yellow);
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  padding: 0;
+  margin-left: 10px;
+  transition: all 0.3s;
 }
-
-/* Tambahkan style untuk tombol refresh */
 
 .motivational-banner button:hover {
-  background-color: rgba(255, 204, 0, 0.2) !important;
-  transform: scale(1.1);
+  background-color: rgba(255, 242, 0, 0.2) !important; /* Yellowish hover */
+  transform: scale(1.1) rotate(180deg);
+  box-shadow: 0 0 8px var(--pacman-yellow);
 }
 
 .motivational-banner button:active {
-  transform: scale(0.95);
+  transform: scale(0.95) rotate(180deg);
+}
+
+/* Loading state for refresh button */
+.motivational-banner button.loading {
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Game container to ensure proper sizing */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Ensure grid is properly sized and Pac-Man stays in bounds */
+.game-board {
+  position: relative;
+  box-sizing: content-box;
+}
+
+/* Important: Ensure players stay within their grid cells */
+.player, .ghost {
+  transform-origin: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fix for grid layout */
+.game-board > div {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+/* Ensure Pac-Man is properly centered in each cell */
+.current-player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
