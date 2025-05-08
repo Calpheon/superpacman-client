@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const socket = io("http://3.25.190.177", {
+const socket = io("https://server.kibopro.web.id/", {
   reconnectionAttempts: 5,
   reconnectionDelay: 1000,
   autoConnect: true,
